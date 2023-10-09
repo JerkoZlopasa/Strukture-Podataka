@@ -9,7 +9,7 @@
 
 int main()
 {
-
+	printf("Ree");
 
 	return 0;
 }

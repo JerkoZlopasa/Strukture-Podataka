@@ -22,6 +22,9 @@
     <ClCompile Include="V1-1.c" />
     <ClCompile Include="V1.c" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="StudentsAmogus.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

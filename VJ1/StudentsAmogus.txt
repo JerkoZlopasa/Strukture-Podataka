@@ -1,0 +1,6 @@
+IME		PREZIME		BODOVI
+Tomo	Tomic		69
+Ante	Antic		420
+Krolo	Krolic		1337
+Vojko	Vujevic		96
+Amogo	Amogi		100

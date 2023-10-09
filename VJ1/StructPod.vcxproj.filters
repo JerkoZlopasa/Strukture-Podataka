@@ -18,5 +18,8 @@
     <ClCompile Include="V1.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="V1-1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,2 +1,3 @@
 C:\Users\student\Desktop\ArcTstuff\StrukPod\StructPod\x64\Debug\StructPod.exe
 C:\Users\student\Desktop\ArcTstuff\StrukPod\VJ1\x64\Debug\StructPod.exe
+C:\Users\TPC\Desktop\StrukPodR\StrukPod\VJ1\x64\Debug\StructPod.exe

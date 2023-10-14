@@ -77,6 +77,6 @@ int main()
 	printf("IME\tPREZIME\tBODOVI\tREL.BOD");
 	for (i = 0; i < broj; i++)
 		printf("\n%s\t%s\t%d\t%f", studarr[i].ime, studarr[i].prezime, studarr[i].bod, (float)studarr[i].bod/(float)najbod*100);
-
+	//jerko je bio ovdje
 	return 0;
 }

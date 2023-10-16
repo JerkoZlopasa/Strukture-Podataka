@@ -7,7 +7,7 @@
 #include <errno.h>
 #include <math.h>
 
-//zasto ne radi
+//zasto ne radiasdasdasd
 
 typedef struct Student
 {

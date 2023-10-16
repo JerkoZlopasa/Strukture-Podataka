@@ -4,3 +4,5 @@ Ante	Antic		420
 Krolo	Krolic		1337
 Vojko	Vujevic		96
 Amogo	Amogi		100
+Jerko	Zlopasa		200
+Antoni	Zuvela		150

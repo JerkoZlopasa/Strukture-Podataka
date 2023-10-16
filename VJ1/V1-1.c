@@ -134,7 +134,6 @@ int main()
 	//Funkcija ispisa
 	Ispis(studarr, broj, najbod);
 
-
 	
 	return 0;
 }

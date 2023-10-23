@@ -1,105 +1,122 @@
-#define _CRT_SECURE_NO_WARNINGS
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <math.h>
-#include <errno.h>
-#include <time.h>
-#include <ctype.h>
-
-
-
-typedef struct studi Studi;
-typedef Studi* pos;
-
-
-
-struct studi
-{
-	char headi[50];
-	char ime[10];
-	char prezime[10];
-	int god;
-	pos nextu;
-};
-
-
-
-Studi* describe(Studi* head)
-{
-	printf("Unesite sto se nalazi u vezanoj listi: ");
-	fgets(head->headi, 50, stdin);
-	printf("\n");
-	head->nextu = NULL;
-
-	return head;
-}
-
-
-
-pos create(pos stud)
-{
-	stud = (Studi*)malloc(sizeof(Studi));
-
-	printf("Unesite ime studenta: ");
-	fgets(stud->ime, 10, stdin);
-
-	printf("Unesite prezime studenta: ");
-	fgets(stud->prezime, 10, stdin);
-
-	printf("Unesite godine studenta: ");
-	scanf("%d", &stud->god);
-	getchar();
-
-	stud->nextu = NULL;
-
-	return stud;
-}
-
-
-
-void connect(pos pos1, pos pos2)
-{
-	printf("\n\nHead %p\tStud to be %p", pos1, pos2);
-
-	printf("\n\nHead files: %s %p", pos1->headi, pos1->nextu);
-	printf("\n\nStud files: %s %s %d", pos2->ime, pos2->prezime, pos2->god);
-
-	pos1->nextu = pos2;
-
-	printf("\nStud files provjera: %s %s %d", pos1->nextu->ime, pos1->nextu->prezime, pos1->nextu->god);
-}
-
-
-
-void connecti(pos pos1, pos pos2)
-{
-	printf("\n\nCurrent %p\tStud to be %p\n", pos1->nextu, pos2);
-
-	printf("\n\nStud1 files: %p", pos1->nextu->nextu);
-	printf("\n\nStud2 files: %s %s %d", pos2->ime, pos2->prezime, pos2->god);
-
-	pos1->nextu->nextu = pos2;
-
-	printf("\n\nStud1 files provjera: %s %s %d", pos1->nextu->ime, pos1->nextu->prezime, pos1->nextu->god);
-	printf("\n\nStud2 files provjera: %s %s %d", pos1->nextu->nextu->ime, pos1->nextu->nextu->prezime, pos1->nextu->nextu->god);
-}
-
-
-
-int main()
-{
-	Studi* head = (Studi*)malloc(sizeof(Studi));
-	Studi* stud = NULL;
-
-	head = describe(head);
-	connect(head, create(stud));
-
-	printf("\n\nHead Next: %p\tStud: %p\n\n\n", head->nextu, stud);
-	
-	connecti(head, create(stud));
-	printf("\n\nHead Next: %p\tStud Next: %p\t Stud: %p", head->nextu, head->nextu->nextu, stud);
-	printf("\n\nStud1: %s %s %d \n\nStud 2: %s %s %d\n", head->nextu->ime, head->nextu->prezime, head->nextu->god, head->nextu->nextu->ime, head->nextu->nextu->prezime, head->nextu->nextu->god);
-
-	return 0;
-}
+//#define _CRT_SECURE_NO_WARNINGS
+//#include <stdio.h>
+//#include <string.h>
+//#include <stdlib.h>
+//#include <math.h>
+//#include <errno.h>
+//#include <time.h>
+//#include <ctype.h>
+//
+//
+//
+//typedef struct osoba Osoba;
+//typedef struct osoba* pozicija;
+//
+//struct osoba
+//{
+//	char ime[50];
+//	char prezime[50];
+//	int rodgodina;
+//	pozicija next;
+//
+//};
+//
+//
+//void unosPocetak(pozicija);
+//void unosKraj(pozicija);
+//void ispis(pozicija);
+//void trazi(pozicija);
+//
+//
+//void brisi(pozicija p)
+//{
+//	getchar();
+//	char imebrisi[50] = "\0";
+//
+//	printf("Unesite ime koje zelite izbrisati: ");
+//	fgets(imebrisi, 50, stdin);
+//
+//	while(p->next)
+//}
+//
+//
+//int main()
+//{
+//	Osoba head;
+//	head.next = NULL;
+//
+//	unosPocetak(&head);
+//	unosKraj(&head);
+//
+//	ispis(head.next);
+//
+//	return 0;
+//}
+//
+//
+//
+//void unosPocetak(pozicija p)
+//{
+//	pozicija q;
+//	q = (pozicija)malloc(sizeof(Osoba));
+//
+//	printf("Unesite ime osobe: ");
+//	fgets(q->ime, 50, stdin);
+//
+//	printf("Unesite prezime osobe: ");
+//	fgets(q->prezime, 50, stdin);
+//
+//	printf("Unesite godinu rodjenja: ");
+//	scanf("%d", &(q->rodgodina));
+//
+//	q->next = p->next;
+//	p->next = q;
+//}
+//
+//void unosKraj(pozicija p)
+//{
+//	pozicija q = (pozicija)malloc(sizeof(Osoba));
+//
+//	while (p->next != NULL)
+//	{
+//		p = p->next;
+//	}
+//
+//	printf("Unesite ime osobe: ");
+//	fgets(q->ime, 50, stdin);
+//
+//	printf("Unesite prezime osobe: ");
+//	fgets(q->prezime, 50, stdin);
+//
+//	printf("Unesite godinu rodjenja: ");
+//	scanf("%d", &(q->rodgodina));
+//
+//	q->next = p->next;
+//	p->next = q;
+//}
+//
+//void ispis(pozicija p)
+//{
+//	while (p != NULL)
+//	{
+//		printf("%s %s %d", p->ime, p->prezime, p->rodgodina);
+//		p = p->next;
+//	}
+//}
+//
+//void trazi(pozicija p)
+//{
+//	char trazen[50] = "\0";
+//
+//	getchar();
+//	printf("Unesite prezime koje trazite: ");
+//	fgets(trazen, 50, stdin);
+//
+//	while (p != NULL && strcmp(p->prezime, trazen) != 0)
+//	{
+//		p = p->next;
+//	}
+//
+//	printf("Osoba je: %s %s,\n a trazeno prezime je %s", p->prezime, p->ime, trazen);
+//
+//}

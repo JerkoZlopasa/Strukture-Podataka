@@ -2,7 +2,7 @@
 #define UNOS_EXIT 1
 #include <stdio.h>
 #include <stdlib.h>
-
+//pozdrav antoni
 
 typedef struct _osoba* pozicija;
 typedef struct _osoba {

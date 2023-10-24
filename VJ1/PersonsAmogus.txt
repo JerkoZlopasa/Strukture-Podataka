@@ -1,0 +1,9 @@
+IME		PREZIME		GODINA
+Tomo	Tomic		2022
+Ante	Antic		2021
+Krolo	Krolic		2003
+Vojko	Vujevic		2002
+Amogo	Amogi		1989
+Jerko	Zlopasa		1992
+Antoni	Zuvela		2005
+Kata	Katic		2007

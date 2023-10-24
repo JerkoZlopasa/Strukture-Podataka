@@ -20,9 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="V1-1.c" />
+    <ClCompile Include="V1-2.c" />
     <ClCompile Include="V1.c" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="PersonsAmogus.txt" />
     <Text Include="StudentsAmogus.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

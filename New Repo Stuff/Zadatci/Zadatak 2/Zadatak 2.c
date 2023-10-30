@@ -109,31 +109,18 @@ void AddBegin(pos Head)
 }
 
 
-//Helper function for comparing strings
-int StringCompare(char searched[50], char compared[50])
-{
-	int count = 0;
-	int i = 0;
-	
-	//The limit here is intentional because the normal strlen counts the '\0', this doesn't
-	for (i = 0; i < strlen(searched)-1; i++)
-		(searched[i] == compared[i]) ? count++ : 1;
-
-	return count;
-}
-
 
 //Find entry by surname search
 void SurSearch(pos Head)
 {
 	//Declaring some temporary variables necessary for the search and counter to find position of entry
-	char searched[50];
+	char searched[50] = { 0 };
 	pos current = Head->next;
 
 	//Initializing the surname to search by
 	getchar();
 	printf("\nType the surname you want to search the list by: ");
-	fgets(searched, 50, stdin);
+	scanf("%s", searched);
 
 	//Searching for the surname and by using StringCompare, a helper function
 	while (1)
@@ -144,7 +131,7 @@ void SurSearch(pos Head)
 			break;
 		}
 
-		if (StringCompare(searched, current->surname) == strlen(searched) - 1)
+		if (strcmp(searched, current->surname) == 0)
 		{
 			printf("\nSurname found! Entry tied to it is:\n%s\t%s\t%d\n", current->name, current->surname, current->yobirth);
 			break;
@@ -159,13 +146,13 @@ void SurSearch(pos Head)
 void Erase(pos Head)
 {
 	//Declaring some temporary variables necessary for the search and counter to find position of entry
-	char erase[50];
+	char erase[50] = { 0 };
 	pos current = Head->next;
 	pos tempconnect = NULL;
 
 	//Initializing the surname to search by
 	printf("\nType the surname you want to erase from the list: ");
-	fgets(erase, 50, stdin);
+	scanf("%s", erase);
 
 	//Searching for the surname and by using StringCompare, a helper function
 	while (1)
@@ -176,7 +163,7 @@ void Erase(pos Head)
 			break;
 		}
 
-		if (StringCompare(erase, current->next->surname) == strlen(erase) - 1)
+		if (strcmp(erase, current->surname) == 0)
 		{
 			printf("Successfully deleted the entry!\n");
 			tempconnect = current->next->next;

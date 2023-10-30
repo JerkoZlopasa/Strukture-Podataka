@@ -206,4 +206,3 @@ void PrintList(pos Head)
 		current = current->next;
 	}
 }
-

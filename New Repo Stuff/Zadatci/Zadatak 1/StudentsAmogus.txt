@@ -3,4 +3,4 @@ Vojko	Vujevic		100
 Ivan	Krolo		50
 Nikola	Godi		45
 Marjan	Sikora		65
-Duje	Res			100
+Duje	Res		100

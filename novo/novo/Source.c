@@ -1,227 +1,359 @@
 #define _CRT_SECURE_NO_WARNINGS
-#define UNOS_EXIT 1
 #include <stdio.h>
 #include <stdlib.h>
-//pozdrav antoni
 
-typedef struct _osoba* pozicija;
-typedef struct _osoba {
-	char ime[50];
-	char prezime[50];
-	int godRod;
-	pozicija next;
-}osoba;
+#define MAX_LINE (1024)
+#define MAX_SIZE (50)
+#define FILE_NOT_OPEN (-1)
+#define FAILED_MEMORY_ALLOCATION (NULL)
+#define EMPTY_LISTS (-2)
+
+struct _Element;
+typedef struct _Element* Position;
+typedef struct _Element {
+	int coefficient;
+	int exponent;
+	Position next;
+} Element;
+
+int readFile(Position headPoly1, Position headPoly2, char* fileName);
+int printPoly(char* polynomeName, Position first);
+int addPoly1(Position resultHead, Position headPoly1, Position headPoly2);
+//int addPoly2(Position resultHead, Position headPoly1, Position headPoly2);
+int multiplyPoly(Position resultHead, Position headPoly1, Position headPoly2);
+int freeMemory(Position head);
+int parseStringIntoList(Position head, char* buffer);
+Position createElement(int coefficient, int exponent);
+int insertSorted(Position head, Position newElement);
+int mergeAfter(Position current, Position newElement);
+int insertAfter(Position current, Position newElement);
+int deleteAfter(Position previous);
+int createAndInsertAfter(int coefficient, int exponent, Position current);
 
 
 
-void MENU(pozicija p);
-int unosNaPocetak(pozicija headAdresa);
-int ispisListe(pozicija headNext);
-int unosNaKrajListe(pozicija headAdresa);
-int trazi(pozicija headNext);
-int brisi(pozicija headAdresa);
-int dodajIzaElementa(pozicija headAdresa);
-int unosPrijeElementa(pozicija headAdresa);
-int unosUdatoteku(pozicija headNext);
-int citajIzDatoteke(void);
+int main() {
+	Element headPoly1 = { .coefficient = 0, .exponent = 0, .next = NULL };
+	Element headPoly2 = { .coefficient = 0, .exponent = 0, .next = NULL };
+	Element headPolyAdd = { .coefficient = 0, .exponent = 0, .next = NULL };
+	Element headPolyMultiply = { .coefficient = 0, .exponent = 0, .next = NULL };
+	char* fileName = "polynomes.txt";
 
-int main(void) {
-	osoba head;
-	head.next = NULL;
+	if (readFile(&headPoly1, &headPoly2, fileName) == EXIT_SUCCESS) {
+		printPoly("First polynome: ", headPoly1.next);
+		printPoly("Second polynome: ", headPoly2.next);
 
-	MENU(&head);
+		addPoly1(&headPolyAdd, headPoly1.next, headPoly2.next);
+		multiplyPoly(&headPolyMultiply, headPoly1.next, headPoly2.next);
+
+		printPoly("Added polynomes: ", headPolyAdd.next);
+		printPoly("Multiplied polynomes: ", headPolyMultiply.next);
+
+		freeMemory(&headPoly1);
+		freeMemory(&headPoly2);
+		freeMemory(&headPolyAdd);
+		freeMemory(&headPolyMultiply);
+
+		// test if we freed memory
+		/*printPoly("First polynome: ", headPoly1.next);
+		printPoly("Second polynome: ", headPoly2.next);
+		printPoly("Added polynomes: ", headPolyAdd.next);
+		printPoly("Multiplied polynomes: ", headPolyMultiply.next);*/
+	}
+
 	return EXIT_SUCCESS;
 }
 
-void MENU(pozicija headAdresa) {
-	char fileIme[50] = { 0 };
-	char odabir = { 0 };
-	while (odabir != 'x') {
+int readFile(Position headPoly1, Position headPoly2, char* fileName) {
+	FILE* filePointer = NULL;
+	char buffer[MAX_LINE] = { 0 };
+	int status = EXIT_SUCCESS;
+	filePointer = fopen("polynomes.txt", "r");
+	if (!filePointer) {
+		printf("\033[31mCan't open file!\033[0m\n");
+		return FILE_NOT_OPEN;
+	}
 
-		printf("Odaberite x za izlazak iz programa.\n");
-		printf("Odaberite a za unosNaPocetak.\n");
-		printf("Odaberite i za ispisListe.\n");
-		printf("Odaberite k za unosNaKrajListe.\n");
-		printf("Odaberite t za trazenje osobe.\n");
-		printf("Odaberite b za brisanje osobe.\n");
-		printf("Odaberite f za unos iza elementa.\n");
-		printf("Odaberite p za unos prije elementa.\n");
-		printf("Odaberite d za unos u datoteku.\n");
-		printf("Odaberite c za citanje iz datoteke.\n");
+	fgets(buffer, MAX_LINE, filePointer);
+	status = parseStringIntoList(headPoly1, buffer);
+	if (status != EXIT_SUCCESS) {
+		return EXIT_FAILURE;
+	}
 
-		scanf(" %c", &odabir);
-		switch (odabir) {
-		case 'X':
-		case'x':
-			printf("Kraj programa\n");
-			break;
-		case 'A':
-		case 'a':
-			unosNaPocetak(headAdresa);
-			printf("Unos uspijesan!\n");
-			break;
-		case 'I':
-		case'i':
-			printf("Ispis liste:\n");
-			ispisListe(headAdresa->next);
-			break;
-		case 'K':
-		case'k':
-			printf("Unos na kraj liste:\n");
-			unosNaKrajListe(headAdresa);
-			break;
-		case 'T':
-		case 't':
-			printf("Trazenje osobe:\n");
-			trazi(headAdresa->next);
-			break;
-		case 'B':
-		case 'b':
-			printf("Brisanje osobe:\n");
-			brisi(headAdresa);
-			break;
+	fgets(buffer, MAX_LINE, filePointer);
+	status = parseStringIntoList(headPoly2, buffer);
+	if (status != EXIT_SUCCESS) {
+		return EXIT_FAILURE;
+	}
 
-		case 'F':
-		case 'f':
-			printf("Dodavanje iza elementa:\n");
-			dodajIzaElementa(headAdresa);
-			break;
-		case 'P':
-		case 'p':
-			printf("Unos prije elementa:\n");
-			unosPrijeElementa(headAdresa);
-			break;
-		case 'D':
-		case 'd':
-			printf("Unos u datoteku:\n");
-			unosUdatoteku(headAdresa->next);
-			break;
-		case 'C':
-		case 'c':
-			printf("Citanje iz dat:\n");
-			citajIzDatoteke();
-			break;
+	fclose(filePointer);
+
+	return EXIT_SUCCESS;
+}
+
+int printPoly(char* polynomeName, Position first) {
+	printf(" %s = ", polynomeName);
+	if (first) {
+		if (first->exponent < 0) {
+			if (first->coefficient == 1) {
+				printf("x^(%d)", first->exponent);
+			}
+			else {
+				printf("%dx^(%d)", first->coefficient, first->exponent);
+			}
+		}
+		else {
+			if (first->coefficient == 1) {
+				printf("x^%d", first->exponent);
+			}
+			else {
+				printf("%dx^%d", first->coefficient, first->exponent);
+			}
+		}
+
+		first = first->next;
+	}
+
+	for (; first != NULL; first = first->next) {
+		if (first->coefficient < 0) {
+			if (first->exponent < 0) {
+				printf(" - %dx^(%d)", abs(first->coefficient), first->exponent);
+			}
+			else {
+				printf(" - %dx^%d", abs(first->coefficient), first->exponent);
+			}
+		}
+		else {
+			if (first->exponent < 0) {
+				if (first->coefficient == 1) {
+					printf(" + x^(%d)", first->exponent);
+				}
+				else {
+					printf(" + %dx^(%d)", first->coefficient, first->exponent);
+				}
+			}
+			else {
+				if (first->coefficient == 1) {
+					printf(" + x^%d", first->exponent);
+				}
+				else {
+					printf(" + %dx^%d", first->coefficient, first->exponent);
+				}
+			}
+		}
+	}
+
+	printf("\n");
+	return EXIT_SUCCESS;
+}
+
+int addPoly1(Position resultHead, Position firstElementPoly1, Position firstElementPoly2) {
+	Position currentPoly1 = firstElementPoly1;
+	Position currentPoly2 = firstElementPoly2;
+	Position currentResult = resultHead;
+	Position remainingPoly = NULL;
+
+	// untill the end of one (or both) polynomes
+	while (currentPoly1 != NULL && currentPoly2 != NULL) {
+		if (currentPoly1->exponent == currentPoly2->exponent) {
+			createAndInsertAfter(currentPoly1->coefficient + currentPoly2->coefficient, currentPoly1->exponent, currentResult);
+			currentPoly1 = currentPoly1->next;
+			currentPoly2 = currentPoly2->next;
+			currentResult = currentResult->next;
+		}
+		else if (currentPoly1->exponent < currentPoly2->exponent) {
+			createAndInsertAfter(currentPoly1->coefficient, currentPoly1->exponent, currentResult);
+			currentPoly1 = currentPoly1->next;
+			currentResult = currentResult->next;
+		}
+		else { // if(currentPoly1->exponent > currentPoly2->exponent)
+			createAndInsertAfter(currentPoly2->coefficient, currentPoly2->exponent, currentResult);
+			currentPoly2 = currentPoly2->next;
+			currentResult = currentResult->next;
 		}
 
 	}
-}
-int unosNaPocetak(pozicija headAdresa) {
-	pozicija novaOsoba = (pozicija)malloc(sizeof(osoba));
-	printf("Unesite ime, prezime i godinu rodjenja:\n");
-	scanf(" %s %s %d", novaOsoba->ime, novaOsoba->prezime, &(novaOsoba->godRod));
-	novaOsoba->next = headAdresa->next;
-	headAdresa->next = novaOsoba;
+	if (currentPoly1 == NULL) {
+		remainingPoly = currentPoly2;
+	}
+	else {
+		remainingPoly = currentPoly1;
+	}
+	// finish with the rest of the remainingPoly
+	while (remainingPoly != NULL) {
+		createAndInsertAfter(remainingPoly->coefficient, remainingPoly->exponent, currentResult);
+		remainingPoly = remainingPoly->next;
+		currentResult = currentResult->next;
+	}
 
-	return 1;
+	return EXIT_SUCCESS;
 }
-int ispisListe(pozicija current) {
-	printf("Ime\tPrezime\tgodRod:\n");
-	while (current != NULL) {
-		printf("%s\t%s\t%d\n", current->ime, current->prezime, current->godRod);
-		current = current->next;
-	}
-	return 2;
-}
-int unosNaKrajListe(pozicija current) {
-	pozicija novaOsoba = (pozicija)malloc(sizeof(osoba));
-	while (current->next != NULL) {
-		current = current->next;
-	}
-	printf("Unesite ime, prezime i godinu rodjenja:\n");
-	scanf(" %s %s %d", novaOsoba->ime, novaOsoba->prezime, &(novaOsoba->godRod));
-	novaOsoba->next = current->next;
-	current->next = novaOsoba;
-	return 3;
-}
-int trazi(pozicija current) {
 
-	char traziPrezime[50] = { 0 };
-	printf("\nPrezime osobe koju trazite:\n");
-	scanf(" %s", traziPrezime);
-	while ((current != NULL &&  strcmp(current->prezime, traziPrezime)) != 0) {
-		current = current->next;
-	}
-	if (current != NULL) {
-		printf("Trazena osoba je: %s %s\n",current->ime,current->prezime);
-	}
-	else printf("Osoba nije pronadjena!\n");
-	return 4;
-}
-int brisi(pozicija current) {
-	pozicija temp = (pozicija)malloc(sizeof(osoba));
-	char brisiPrezime[50] = { 0 };
-	printf("Unesite prezime osobe koju zelite izbrisati:\n");
-	scanf(" %s", brisiPrezime);
-	while (current->next != NULL && strcmp(current->next->prezime, brisiPrezime) != 0) {
-		current = current->next;
-	}
-	if (current->next != NULL) {
-		temp = current->next;
-		current->next = temp->next;
-		free(temp);
-	}
-	else printf("Osoba nije pronadjena!\n");
-	return 5;
-}
-int dodajIzaElementa(pozicija current) {
+//int addPoly2(Position resultHead, Position headPoly1, Position headPoly2)
+//{
+//	Position currentPoly1 = NULL;
+//	Position currentPoly2 = NULL;
+//
+//	for (currentPoly1 = headPoly1->next; currentPoly1 != NULL; currentPoly1 = currentPoly1->next)
+//	{
+//		Position newElement = createElement(currentPoly1->coefficient, currentPoly1->exponent);
+//		if (!newElement)
+//		{
+//			return EXIT_FAILURE;
+//		}
+//
+//		insertSorted(resultHead, newElement);
+//	}
+//	for (currentPoly2 = headPoly2->next; currentPoly2 != NULL; currentPoly2 = currentPoly2->next)
+//	{
+//		Position newElement = createElement(currentPoly2->coefficient, currentPoly2->exponent);
+//		if (!newElement)
+//		{
+//			return EXIT_FAILURE;
+//		}
+//
+//		insertSorted(resultHead, newElement);
+//	}
+//	return EXIT_SUCCESS;
+//}
 
-	pozicija novaOsoba = (pozicija)malloc(sizeof(osoba));
-	pozicija temp = (pozicija)malloc(sizeof(osoba));
-	char izaPrezimena[50] = { 0 };
-	printf("Prezime osobe iza koje zelite unijeti novu osobu:\n");
-	scanf(" %s", izaPrezimena);
-	while (current != NULL && strcmp(current->prezime,izaPrezimena) != 0 ) {
-		current = current->next;
-	}
-	if (current != NULL) {
-		printf("Unesite ime prezime i godRod:\n");
-		scanf(" %s %s %d", novaOsoba->ime, novaOsoba->prezime, &(novaOsoba->godRod));
-		novaOsoba->next = current->next;
-		current->next = novaOsoba;
-	}
-	else printf("Osoba nije pronadjena!\n");
-	return 6;
-}
-int unosPrijeElementa(pozicija current) {
-	pozicija novaOsoba = (pozicija)malloc(sizeof(osoba));
-	char prijePrezimena[50] = { 0 };
-	printf("Unesite prezime osobe ispred koje zelite unijeti element:\n");
-	scanf(" %s", prijePrezimena);
-	while (current->next != NULL && strcmp(current->next->prezime, prijePrezimena) != 0) {
-		current = current->next;
-	}
-	if (current->next != NULL) {
-		printf("Unesite ime prezime i godRod Noveosobe:\n");
-		scanf(" %s %s %d", novaOsoba->ime, novaOsoba->prezime, &(novaOsoba->godRod));
-		novaOsoba->next = current->next;
-		current->next = novaOsoba;
-	}
-	else printf("Prazna lista!\n");
-	return 7;
-}
-int unosUdatoteku(pozicija current) {
-	FILE* file = fopen("struktura.txt", "w");
-	fprintf(file,"IME\tPrezime\tGODROD:\n");
-	while (current != NULL) {
-		fprintf(file,"%s\t%s\t%d", current->ime, current->prezime, current->godRod);
-		current = current->next;
-	}
-	fclose(file);
-	return 8;
-}
-int citajIzDatoteke(void) {
-	pozicija temp = (pozicija)malloc(sizeof(osoba));
-	FILE* file = fopen("struktura.txt", "r");
+int multiplyPoly(Position resultHead, Position firstElementPoly1, Position firstElementPoly2)
+{
+	if (firstElementPoly1 != NULL || firstElementPoly2 != NULL) {
+		for (Position currentPoly1 = firstElementPoly1; currentPoly1 != NULL; currentPoly1 = currentPoly1->next) {
+			for (Position currentPoly2 = firstElementPoly2; currentPoly2 != NULL; currentPoly2 = currentPoly2->next) {
+				Position newElement = createElement(currentPoly1->coefficient * currentPoly2->coefficient, currentPoly1->exponent + currentPoly2->exponent);
+				if (!newElement) {
+					return EXIT_FAILURE;
+				}
 
-	while (fgetc(file) != '\n');
-	printf("Ime\tPrezime\tGodRod:\n");
-	while (!feof(file)) {
-		if (fscanf(file, " %s %s %d", temp->ime, temp->prezime, &(temp->godRod))==3){
-			printf("%s\t%s\t%d\n", temp->ime, temp->prezime, temp->godRod);
+				insertSorted(resultHead, newElement);
+			}
 		}
-		else printf("Prazna datoteka!\n");
+		return EXIT_SUCCESS;
 	}
-	free(temp);
-	fclose(file);
-	return 9;
+	return EMPTY_LISTS;
+}
+
+int freeMemory(Position head)
+{
+	Position current = head;
+
+	while (current->next) {
+		deleteAfter(current);
+	}
+
+	return EXIT_SUCCESS;
+}
+
+int parseStringIntoList(Position head, char* buffer)
+{
+	char* currentBuffer = buffer;
+	int coefficient = 0;
+	int exponent = 0;
+	int numBytes = 0;
+	int status = 0;
+	Position newElement = NULL;
+
+	while (strlen(currentBuffer) > 0) {
+		status = sscanf(currentBuffer, " %dx^%d %n", &coefficient, &exponent, &numBytes);
+		//On success, the sscanf returns the number of variables filled (it has to be 2!)
+		if (status != 2) {
+			printf("This file is not good!\n");
+			return EXIT_FAILURE;
+		}
+
+		newElement = createElement(coefficient, exponent);
+		if (!newElement) {
+			return EXIT_FAILURE;
+		}
+
+		insertSorted(head, newElement);
+
+		// since currentBuffer is a memory address of the first character, adding numBytes moves pointer to the next and next... character untill it is at the end
+		currentBuffer += numBytes;
+	}
+	printf(" DUJINA %d", strlen(currentBuffer));
+
+	return EXIT_SUCCESS;
+}
+
+Position createElement(int coefficient, int exponent) {
+	Position element = NULL;
+
+	element = (Position)malloc(sizeof(Element));
+	if (!element) {
+		printf("Can't allocate memory!\n");
+		return FAILED_MEMORY_ALLOCATION;
+	}
+
+	element->coefficient = coefficient;
+	element->exponent = exponent;
+	element->next = NULL;
+
+	return element;
+}
+
+int insertSorted(Position head, Position newElement) {
+	Position current = head;
+
+	// checks exponents so it can be sorted
+	while (current->next != NULL && current->next->exponent > newElement->exponent) {
+		current = current->next;
+	}
+
+	mergeAfter(current, newElement);
+
+	return EXIT_SUCCESS;
+}
+
+int mergeAfter(Position current, Position newElement) {
+	// new element doesn't have same exponent as previous
+	if (current->next == NULL || current->next->exponent != newElement->exponent) {
+		insertAfter(current, newElement);
+	}
+	// new element has same exponent as previous so they need to be merged
+	else {
+		int resultCoefficient = current->next->coefficient + newElement->coefficient;
+		// if coeff sum is 0 that element dissapears
+		if (resultCoefficient == 0)
+		{
+			deleteAfter(current);
+		}
+		else
+		{
+			current->next->coefficient = resultCoefficient;
+		}
+		free(newElement);
+	}
+
+	return EXIT_SUCCESS;
+}
+
+int insertAfter(Position current, Position newElement) {
+	newElement->next = current->next;
+	current->next = newElement;
+
+	return EXIT_SUCCESS;
+}
+
+int deleteAfter(Position previous) {
+	Position toDelete = NULL;
+
+	toDelete = previous->next;
+	previous->next = toDelete->next;
+	free(toDelete);
+
+	return EXIT_SUCCESS;
+}
+
+int createAndInsertAfter(int coefficient, int exponent, Position current) {
+	Position newElement = createElement(coefficient, exponent);
+	if (!newElement) {
+		return EXIT_FAILURE;
+	}
+
+	insertAfter(current, newElement);
+
+	return EXIT_SUCCESS;
 }

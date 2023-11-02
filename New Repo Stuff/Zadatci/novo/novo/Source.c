@@ -34,7 +34,6 @@ int main(void) {
 }
 
 void MENU(pozicija headAdresa) {
-	char fileIme[50] = { 0 };
 	char odabir = { 0 };
 	while (odabir != 'x') {
 
@@ -105,8 +104,10 @@ void MENU(pozicija headAdresa) {
 
 	}
 }
+
 int unosNaPocetak(pozicija headAdresa) {
 	pozicija novaOsoba = (pozicija)malloc(sizeof(osoba));
+	//provjeru dodat
 	printf("Unesite ime, prezime i godinu rodjenja:\n");
 	scanf(" %s %s %d", novaOsoba->ime, novaOsoba->prezime, &(novaOsoba->godRod));
 	novaOsoba->next = headAdresa->next;
@@ -114,6 +115,7 @@ int unosNaPocetak(pozicija headAdresa) {
 
 	return 1;
 }
+
 int ispisListe(pozicija current) {
 	printf("Ime\tPrezime\tgodRod:\n");
 	while (current != NULL) {
@@ -122,6 +124,7 @@ int ispisListe(pozicija current) {
 	}
 	return 2;
 }
+
 int unosNaKrajListe(pozicija current) {
 	pozicija novaOsoba = (pozicija)malloc(sizeof(osoba));
 	while (current->next != NULL) {
@@ -133,6 +136,7 @@ int unosNaKrajListe(pozicija current) {
 	current->next = novaOsoba;
 	return 3;
 }
+
 int trazi(pozicija current) {
 
 	char traziPrezime[50] = { 0 };
@@ -147,6 +151,7 @@ int trazi(pozicija current) {
 	else printf("Osoba nije pronadjena!\n");
 	return 4;
 }
+
 int brisi(pozicija current) {
 	pozicija temp = (pozicija)malloc(sizeof(osoba));
 	char brisiPrezime[50] = { 0 };
@@ -163,6 +168,7 @@ int brisi(pozicija current) {
 	else printf("Osoba nije pronadjena!\n");
 	return 5;
 }
+
 int dodajIzaElementa(pozicija current) {
 
 	pozicija novaOsoba = (pozicija)malloc(sizeof(osoba));
@@ -182,6 +188,7 @@ int dodajIzaElementa(pozicija current) {
 	else printf("Osoba nije pronadjena!\n");
 	return 6;
 }
+
 int unosPrijeElementa(pozicija current) {
 	pozicija novaOsoba = (pozicija)malloc(sizeof(osoba));
 	char prijePrezimena[50] = { 0 };
@@ -199,6 +206,7 @@ int unosPrijeElementa(pozicija current) {
 	else printf("Prazna lista!\n");
 	return 7;
 }
+
 int unosUdatoteku(pozicija current) {
 	FILE* file = fopen("struktura.txt", "w");
 	fprintf(file,"IME\tPrezime\tGODROD:\n");
@@ -209,6 +217,7 @@ int unosUdatoteku(pozicija current) {
 	fclose(file);
 	return 8;
 }
+
 int citajIzDatoteke(void) {
 	pozicija temp = (pozicija)malloc(sizeof(osoba));
 	FILE* file = fopen("struktura.txt", "r");

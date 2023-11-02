@@ -155,7 +155,6 @@ pos addEnd(pos Header)
 
 
 	return Header;
-
 }
 
 
@@ -238,6 +237,9 @@ pos removePersonSur(pos Header)
 
 		current = current->next;
 	}
+
+
+	return Header;
 }
 
 
@@ -295,6 +297,9 @@ pos removePersonNum(pos Header)
 			current = current->next;
 		}
 	}
+
+
+	return Header;
 }
 
 

@@ -24,7 +24,7 @@ struct Person
 
 
 
-//Declaring necessary functions
+//Declaring necessary functions (past task)
 pos setHead(pos);
 pos createPerson(void);
 pos addBegin(pos);
@@ -36,23 +36,31 @@ void printList(pos);
 
 
 
+//Declaring necessary functions (this task)
+pos addAfter(pos);
+pos addBefore(pos);
+pos sortSur(pos);
+pos writeFile(pos);
+pos readFile(pos);
+
+
+
+//Exercise for reader: Test all zhe functiones and gib bugs if any exist. Hope I coded this well bruh
 int main()
 {
-	//Setting up header
+	//Setting up header1
 	pos Header = NULL;
 	Header = setHead(Header);
 
-	for (int i = 0; i < 6; i++)
-		addBegin(Header);
 
+	//Setting up header2
+	//NOTE: No need for setHead function, 
+	//this one gets read from the file, not from stdin
+	pos Header2 = (pos)malloc(sizeof(Person));
+	Header2->next = NULL;
+
+	sortSur(Header);
 	printList(Header);
-
-	findPerson(Header);
-	removePersonNum(Header);
-	removePersonSur(Header);
-
-	printList(Header);
-
 
 	return 0;
 }
@@ -155,7 +163,6 @@ pos addEnd(pos Header)
 
 
 	return Header;
-
 }
 
 
@@ -238,6 +245,9 @@ pos removePersonSur(pos Header)
 
 		current = current->next;
 	}
+
+
+	return Header;
 }
 
 
@@ -295,6 +305,9 @@ pos removePersonNum(pos Header)
 			current = current->next;
 		}
 	}
+
+
+	return Header;
 }
 
 
@@ -317,4 +330,259 @@ void printList(pos Header)
 	}
 
 	puts("");
+}
+
+
+
+
+
+//Defining a function for writing old list to file
+pos writeFile(pos Header)
+{
+	//Defining a file variable and a position variable
+	FILE* File = fopen("Persons.txt", "w");
+	pos current = Header;
+
+
+	//Checking if file opened successfully
+	if (File == NULL)
+	{
+		printf("Failed to open file!");
+		return NULL;
+	}
+
+	//Writing to file, description included
+	else
+	{
+		//Printing header line into file (description)
+		fprintf(File, "%s", current->name);
+		current = current->next;
+
+		while (current != NULL)
+		{
+			fprintf(File, "%s\t%s\t\t%d\n", current->name, current->surname, current->yobirth);
+			current = current->next;
+		}
+	}
+
+
+	//Closing file
+	fclose(File);
+
+
+	return Header;
+}
+
+
+//Defining a function for reading from file
+//NOTE: Using new list from now on, I wanna keep things nice, tidy and organized, dammit! xD
+pos readFile(pos Header2)
+{
+	//Defining a file variable and a position variable
+	FILE* File = fopen("Readme.txt", "r");
+	pos current = Header2;
+	pos newP2 = NULL;
+
+	//Checking if file opened successfully
+	if (File == NULL)
+	{
+		printf("Failed to open file!");
+		return NULL;
+	}
+
+
+	//Reading header of file
+	fgets(Header2->name, 50, File);
+
+	//Reading the rest of the file
+	while (!feof(File))
+	{
+		newP2 = (pos)malloc(sizeof(Person));
+		newP2->next = NULL;
+		if(fscanf(File, "%s %s %d", newP2->name, newP2->surname, &newP2->yobirth));
+		current->next = newP2;
+		current = current->next;
+	}
+
+
+	//Closing the file
+	fclose(File);
+
+
+	return Header2;
+}
+
+
+//Defining a function for adding a new element at a certain point
+pos addAfter(pos Header2)
+{
+	//Declaring three position variables [current pos, wanted pos, total entries] 
+	// to cycle the list with, one to store new entry, one to count
+	int position[3] = { 0 };
+	pos current = Header2;
+	pos Entry = NULL;
+
+
+	//Printing the list for a clear view of all entries and their positions
+	printf("\nThe current list looks like this:\n");
+	printf("%s", current->name);
+
+
+	//Setting the pointer 'current', cycling to find number of entries, then resetting
+	current = current->next; 
+	while (current != NULL) 
+	{
+		printf("%d | %s\t%s\t%d\n", position[2] + 1, current->name, current->surname, current->yobirth); 
+		current = current->next; 
+		position[2]++;
+	}
+	//Useful little line, makes the pos of the choice line up to the actual pos in the list. heheee cleverrr
+	current = Header2;  
+
+
+	//Checking the position is in bounds
+	do
+	{
+		printf("\nAfter which position would you like to add an entry? ");
+		scanf("%d", position + 1);
+
+	} while (position[1] >= position[2]);
+
+
+	//Creating new entry for the list
+	Entry = createPerson();
+
+
+	//Cycling to find the entered position and adding the entry after it
+	while (1)
+	{
+		if (position[0] == position[1])
+		{
+			Entry->next = current->next;
+			current->next = Entry;
+
+			printf("Successfully added the entry\n\n");
+			break;
+		}
+
+		else
+		{
+			position[0]++;
+			current = current->next;
+		}
+	}
+
+
+	return Header2;
+}
+
+
+//Defining a function for adding a new element before a certain point
+pos addBefore(pos Header2)
+{
+	//Declaring three position variables [current pos, wanted pos, total entries] 
+	// to cycle the list with, one to store address to be deleted, one to count
+	int position[3] = { 0 };
+	pos current = Header2;
+	pos Entry = createPerson();
+
+
+	//Printing the list for a clear view of all entries and their positions
+	printf("\nThe current list looks like this:\n");
+	printf("%s", current->name);
+
+
+	//Setting the pointer 'current', cycling to find number of entries, then resetting
+	current = current->next;
+	while (current != NULL)
+	{
+		printf("%d | %s\t%s\t%d\n", position[2] + 1, current->name, current->surname, current->yobirth);
+		current = current->next;
+		position[2]++;
+	}
+	current = Header2;
+
+
+	//Checking the position is in bounds
+	do
+	{
+		printf("\nWhich position would you like to add before? ");
+		scanf("%d", position + 1);
+
+	} while (position[1] >= position[2]);
+
+
+	//Cycling to find the entered position and add entry before it
+	while (1)
+	{
+		if (position[0] + 1 == position[1])
+		{
+			Entry->next = current->next;
+			current->next = Entry;
+
+			printf("Successfully added the entry\n\n");
+			break;
+		}
+
+		else
+		{
+			position[0]++;
+			current = current->next;
+		}
+	}
+
+
+	return Header2;
+}
+
+
+//Defining a function for sorted input of surnames
+pos sortSur(pos Header)
+{
+	//Defining a 'current' variable for cycling the list, 
+	// 'Entry' variable to house new entry and counter [current num, num entries]
+	//Also 
+	pos current = Header;
+	pos Entry = NULL;
+	int num[2] = { 0 };
+
+
+	//Setting how many entries there are
+	printf("How many entries do you want to add to the list? ");
+	scanf("%d", num + 1);
+
+
+	//Creating initial entry to have something to compare to
+	Header->next = createPerson(); 
+	
+	//Doing sorted input, -1 due to initial entry
+	for (num[0]; num[0] < num[1]-1; num[0]++)
+	{
+		//Creating other entries
+		Entry = createPerson();
+
+		while (current->next != NULL)
+		{
+			if (strcmp(Entry->surname, current->next->surname) < 0)
+			{
+				Entry->next = current->next;
+				current->next = Entry;
+				break;
+			}
+
+			else if (strcmp(Entry->surname, current->next->surname) > 0)
+			{
+				current = current->next;
+			}
+
+			else
+				break;
+		
+		}
+
+		current = Header;
+	}
+
+
+	return Header;
 }

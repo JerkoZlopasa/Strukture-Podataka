@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Zadatak 3", "Zadatak 3.vcxproj", "{7289FD1E-ACCD-4044-BBCB-07F0470C51F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7289FD1E-ACCD-4044-BBCB-07F0470C51F0}.Debug|x64.ActiveCfg = Debug|x64
+		{7289FD1E-ACCD-4044-BBCB-07F0470C51F0}.Debug|x64.Build.0 = Debug|x64
+		{7289FD1E-ACCD-4044-BBCB-07F0470C51F0}.Debug|x86.ActiveCfg = Debug|Win32
+		{7289FD1E-ACCD-4044-BBCB-07F0470C51F0}.Debug|x86.Build.0 = Debug|Win32
+		{7289FD1E-ACCD-4044-BBCB-07F0470C51F0}.Release|x64.ActiveCfg = Release|x64
+		{7289FD1E-ACCD-4044-BBCB-07F0470C51F0}.Release|x64.Build.0 = Release|x64
+		{7289FD1E-ACCD-4044-BBCB-07F0470C51F0}.Release|x86.ActiveCfg = Release|Win32
+		{7289FD1E-ACCD-4044-BBCB-07F0470C51F0}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8B6A81ED-DAA0-4883-86BA-9B2ECC0A7BD4}
+	EndGlobalSection
+EndGlobal

@@ -18,6 +18,12 @@
     <ClCompile Include="Zadatak 4.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Zadatak4 - Improved.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fscnaf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Polinomi.txt" />

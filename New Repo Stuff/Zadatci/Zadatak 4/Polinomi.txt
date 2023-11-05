@@ -1,8 +1,25 @@
-KOEF	EXP
-2		4
-10		5
-43		3
-20		6
-10		7
-24		2
-5		3
+KOEF	UNKNOWN		EXP
+4		x			5
+8		x			10
+6		x			20
+4		x			5
+9		x			5
+7		x			12	
+3		x			4
+8		x			5
+6		x			7
+-----NEXT POLINOME-----
+2		x			9
+5		x			12
+3		x			15
+7		x			10
+8		x			9
+12		x			9
+4		x			23
+-----NEXT POLINOME-----
+1		x			7
+5		x			12
+6		x			15
+7		x			10
+8		x			7
+9		x			23

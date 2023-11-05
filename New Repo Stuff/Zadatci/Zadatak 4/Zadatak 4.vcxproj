@@ -127,7 +127,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="fscnaf.c" />
     <ClCompile Include="Zadatak 4.c" />
+    <ClCompile Include="Zadatak4 - Improved.c" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Polinomi.txt" />

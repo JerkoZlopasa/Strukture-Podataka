@@ -57,6 +57,8 @@ int main()
 	sumPoli(&Head->next[0], &Head->next[1], PolSum);
 	printPoli(PolSum);
 
+	puts("\n");
+
 	return 0; 
 }
 

@@ -40,12 +40,22 @@ int main()
 	pos PolSum = (pos)malloc(sizeof(Poli));
 	pos PolProd = (pos)malloc(sizeof(Poli));
 
-
 	//Sets up header member and makes a list of polinomes
 	setHead(Head);
 	readPoli(Head);
 
+	//Sorted input of polinomes
 	sortInput(Head);
+
+	//Calculating product of polinomes and printing
+	prodPoli(&Head->next[0], &Head->next[1], PolProd);
+	printPoli(PolProd);
+
+	puts("\n");
+
+	//Calculating the sum of polinomes and printing
+	sumPoli(&Head->next[0], &Head->next[1], PolSum);
+	printPoli(PolSum);
 
 	return 0; 
 }
@@ -227,7 +237,7 @@ pos sortInput(pos Header)
 	{
 		current = listEl[i].next;
 		Entry = listEl[i].next->next;
-		
+
 		while (Entry != NULL)
 		{
 			if (current->unknown == Entry->unknown && current->pot == Entry->pot)
@@ -256,15 +266,119 @@ pos sortInput(pos Header)
 	fclose(File);
 
 
-	current = listEl[1].next;
-	while (current != NULL)
+	return Header;
+}
+
+
+//Defining a function for product of polinomes
+pos prodPoli(pos Pol1, pos Pol2, pos Prod)
+{
+	//Declaring all necessary variables:
+	//three position variables, and an entry variable
+	pos currPol1 = Pol1->next;
+	pos currPol2 = Pol2->next;
+	pos currProd = Prod;
+	currProd->next = NULL;
+	pos Entry = NULL;
+
+	//Product loop
+	while (currPol1 != NULL)
 	{
-		printf("%d %c %d\n", current->koef, current->unknown, current->pot);
-		current = current->next;
+		while (currPol2 != NULL)
+		{
+			//Creating entry 
+			currProd->koef = currPol1->koef * currPol2->koef;
+			currProd->pot = currPol1->pot + currPol2->pot;
+			currProd->unknown = 'x';
+
+			//Connecting entries
+			Entry = (pos)malloc(sizeof(Poli));
+			Entry->next = NULL;
+			currProd->next = Entry;
+		
+
+			//Updating the positions
+			currProd = currProd->next;
+			currPol2 = currPol2->next;
+		}
+
+		//Updating first position, resetting 2nd
+		currPol1 = currPol1->next;
+		currPol2 = Pol2->next;
+
+	}
+
+	//Cycling to free last bad entry
+	currProd = Prod;
+	while (currProd->next->next != NULL)
+		currProd = currProd->next;
+
+	currProd->next = NULL;
+
+
+	return Prod;
+}
+
+
+//Defining a function for sum of polinomes
+pos sumPoli(pos Pol1, pos Pol2, pos Sum)
+{
+	//Declaring all necessary variables:
+	//three position variables, and an entry variable
+	pos currPol1 = Pol1->next;
+	pos currPol2 = Pol2->next;
+	pos currSum = Sum;
+	currSum->next = NULL;
+	pos Entry = NULL;
+
+	//Product loop
+	while (currPol1 != NULL)
+	{
+		while (currPol2 != NULL)
+		{
+			//Creating entry 
+			if (currPol1->pot == currPol2->pot)
+			{
+				currSum->koef = currPol1->koef + currPol2->koef;
+				currSum->pot = currPol1->pot;
+				currSum->unknown = 'x';
+				Entry = (pos)malloc(sizeof(Poli));
+				Entry->next = NULL;
+				currSum->next = Entry;
+			}
+			
+			//Connecting entries
+			else
+			{
+				currSum->koef = currPol2->koef;
+				currSum->pot = currPol2->pot;
+				currSum->unknown = 'x';
+				Entry = (pos)malloc(sizeof(Poli));
+				Entry->next = NULL;
+				currSum->next = Entry;
+			}
+
+			//Updating the positions
+			currSum = currSum->next;
+			currPol2 = currPol2->next;
+		}
+
+		//Updating first position, resetting 2nd
+		currPol1 = currPol1->next;
+		currPol2 = Pol2->next;
+
 	}
 
 
-	return Header;
+	//Cycling to free last bad entry
+	currSum = Sum;
+	while (currSum->next->next != NULL)
+		currSum = currSum->next;
+
+	currSum->next = NULL;
+
+
+	return Sum;
 }
 
 

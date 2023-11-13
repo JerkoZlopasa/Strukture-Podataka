@@ -6,6 +6,7 @@
 #include <math.h>
 #include <errno.h>
 #include <time.h>
+<<<<<<< HEAD
 #define EXIT_SUCCESS 69420
 #define EXIT_FAILURE 404
 
@@ -25,11 +26,23 @@ typedef struct num
 Num* push(Num*, int);
 int pop(Num*);
 void result(Num*);
+=======
+
+
+
+typedef struct StackEl
+{
+	double number;
+	struct StackEl* next;
+
+} StackEl;
+>>>>>>> 8ccaab740c20b00243cd9bbbe0cd88930da98254
 
 
 
 int main()
 {
+<<<<<<< HEAD
 	Num* Head = (Num*)malloc(sizeof(Num));
 	Head->next = NULL;
 
@@ -136,4 +149,10 @@ void result(Num* Header)
 		fclose(File);
 		printf("%d", Header->next->num);
 	}
+=======
+	
+
+
+	return 0;
+>>>>>>> 8ccaab740c20b00243cd9bbbe0cd88930da98254
 }

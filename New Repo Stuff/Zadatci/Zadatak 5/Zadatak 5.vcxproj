@@ -127,7 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\Zadatak 5.c" />
+    <ClCompile Include="Zadatak 5.c" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Postfiks.txt" />

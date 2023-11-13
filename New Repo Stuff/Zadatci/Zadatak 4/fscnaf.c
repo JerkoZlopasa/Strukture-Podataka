@@ -9,33 +9,47 @@
 //
 //
 //
-////Defining a structure and position argument for the object 'Polinome'
-//typedef struct poli Poli;
-//typedef Poli* pos;
-//
-//struct poli
+//typedef struct
 //{
-//	char desc[50];
-//	char unknown;
 //	int koef;
-//	int pot;
-//	pos next;
-//};
+//	char unknown;
+//	int power;
+//
+//} Poli;
 //
 //
 //
 //int main()
 //{
-//	FILE* File = fopen("Polinomi.txt", "r");
+//	FILE* File = fopen("PolyRedo.txt", "r");
+//	int status = 0;
+//	int num = 0;
+//	char* buffer[1024];
+//	char* posinstr = buffer;
 //	Poli Amogus;
-//	char* Amogo = "4	x	5";
 //
-//	while (fgetc(File) != '\n');
+//	fgets(buffer, sizeof(buffer), File);
+//	
+//	while (1)
+//	{
+//		status = sscanf(posinstr, "%d%c^%d %n", &Amogus.koef, &Amogus.unknown, &Amogus.power, &num);
 //
-//	fscanf(File, "%d %c %d", &Amogus.koef, &Amogus.unknown, &Amogus.pot);
-//	fscanf(Amogo, "%d %c %d", &Amogus.koef, &Amogus.unknown, &Amogus.pot);
+//		if (status == 0)
+//			break;
 //
-//	printf("%d %c %d\n", Amogus.koef, Amogus.unknown, Amogus.pot);
+//		else if (status == 2)
+//		{
+//			printf("%d", Amogus.koef);
+//			break;
+//		}
+//
+//		
+//
+//		printf("%d%c^%d\n", Amogus.koef, Amogus.unknown, Amogus.power);
+//		posinstr += num + 1;
+//	}
+//	
+//	fclose(File);
 //
 //
 //	return 0;

@@ -1,11 +1,1 @@
-<<<<<<< HEAD
-﻿  Zadatak 5.c
-C:\Users\TPC\Desktop\StrukPodNR\StrukPod\New Repo Stuff\Zadatci\Zadatak 5\Zadatak 5.c(9,1): warning C4005: 'EXIT_SUCCESS': macro redefinition
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\stdlib.h(52,1): message : see previous definition of 'EXIT_SUCCESS'
-C:\Users\TPC\Desktop\StrukPodNR\StrukPod\New Repo Stuff\Zadatci\Zadatak 5\Zadatak 5.c(10,1): warning C4005: 'EXIT_FAILURE': macro redefinition
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\ucrt\stdlib.h(53,1): message : see previous definition of 'EXIT_FAILURE'
-C:\Users\TPC\Desktop\StrukPodNR\StrukPod\New Repo Stuff\Zadatci\Zadatak 5\Zadatak 5.c(51,3): warning C4047: 'return': 'Num *' differs in levels of indirection from 'int'
-C:\Users\TPC\Desktop\StrukPodNR\StrukPod\New Repo Stuff\Zadatci\Zadatak 5\Zadatak 5.c(91,22): warning C4098: 'result': 'void' function returning a value
-=======
-﻿  Zadatak 5.vcxproj -> C:\ArcStuff\StrukPod\New Repo Stuff\Zadatci\Zadatak 5\x64\Debug\Zadatak 5.exe
->>>>>>> 8ccaab740c20b00243cd9bbbe0cd88930da98254
+﻿  Zadatak 5.vcxproj -> C:\Users\TPC\Desktop\StrukPodNR\StrukPod\New Repo Stuff\Zadatci\Zadatak 5\x64\Debug\Zadatak 5.exe

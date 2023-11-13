@@ -15,15 +15,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Zadatak 5.c">
+    <ClCompile Include="..\..\..\..\..\Zadatak 5.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Text Include="Postfiks.txt" />
-=======
-    <Text Include="postfix.txt" />
->>>>>>> 8ccaab740c20b00243cd9bbbe0cd88930da98254
   </ItemGroup>
 </Project>

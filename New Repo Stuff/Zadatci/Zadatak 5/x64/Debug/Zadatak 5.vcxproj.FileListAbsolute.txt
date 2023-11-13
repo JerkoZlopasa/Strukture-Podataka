@@ -1,5 +1,1 @@
-<<<<<<< HEAD
 C:\Users\TPC\Desktop\StrukPodNR\StrukPod\New Repo Stuff\Zadatci\Zadatak 5\x64\Debug\Zadatak 5.exe
-=======
-C:\ArcStuff\StrukPod\New Repo Stuff\Zadatci\Zadatak 5\x64\Debug\Zadatak 5.exe
->>>>>>> 8ccaab740c20b00243cd9bbbe0cd88930da98254

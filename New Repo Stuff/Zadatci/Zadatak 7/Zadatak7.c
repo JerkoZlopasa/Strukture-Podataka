@@ -210,7 +210,7 @@ direc* change(direc* pos)
 	list(curr->subDir);
 	curr = curr->subDir;
 
-	//Searching for directory with precautions as to the existence of a directory
+	//Searching for directory with precautions as to the existence of such directory
 	while (1)
 	{
 		printf("Which directory do you want to change into? ");
@@ -219,18 +219,25 @@ direc* change(direc* pos)
 		while (1)
 		{
 			if (curr == NULL)
-			{
-				printf("No such directory! Please enter valid name!");
 				break;
-			}
+
+			if (strcmp(name, curr->name) == 0)
+				break;
 
 			if (strcmp(name, curr->name) != 0)
 				curr = curr->nextDir;
-
-			if (strcmp(name, curr->name) == 0)
-				return curr;
-
 		}
+
+		//If in subfolders there is no such folder, prompt user to try again and reset position variable
+		if (curr == NULL)
+		{
+			printf("No such directory! Please enter valid name!");
+			curr = pos->subDir;
+		}
+
+		//If there exists such folder, return position argument
+		if (strcmp(name, curr->name) == 0)
+			return curr;
 	}
 }
 

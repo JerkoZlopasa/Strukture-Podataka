@@ -103,6 +103,7 @@
 //	return StudList;
 //}
 //
+// added 1 comment
 //
 ////Function for printing the list 
 //void PrintList(Student* StudList, int numStud, int* maxPoint)

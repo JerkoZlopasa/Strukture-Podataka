@@ -1,4 +1,349 @@
+
 #define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <time.h>
+
+
+struct _node;
+typedef struct _node* pos;
+typedef struct _node {
+    int value;
+    pos left;
+    pos right;
+} Node;
+
+pos add_node(int value);
+pos insert(pos root, int value);
+int in_o(pos root);
+int pre_o(pos root);
+int post_o(pos root);
+int level_o(pos root);
+pos search(pos root, int value);
+pos delete_node(pos root, int value);
+int replace(pos root);
+int random();
+
+int main() {
+    pos root = NULL;
+    pos root_r = NULL;
+    srand(time(0));
+
+    /*int rootValue = 0;
+    printf("\033[0;32mEnter root value: \033[0m");
+    scanf("%d", &rootValue);
+    root = insert(root, rootValue);*/
+
+    root = insert(root, 2);
+    insert(root, 5);
+    insert(root, 7);
+    insert(root, 8);
+    insert(root, 11);
+    insert(root, 1);
+    insert(root, 4);
+    insert(root, 2);
+    insert(root, 3);
+    insert(root, 7);
+
+    level_o(root);
+
+    replace(root);
+
+    printf("\n");
+    level_o(root);
+
+    root_r = insert(root_r, random());
+    for (int i = 0; i < 10; i++) {
+        insert(root_r, random());
+    }
+
+    printf("\n");
+    level_o(root_r);
+
+    //rand()
+
+    /*while (1) {
+        printf("\nMenu:\n");
+        printf("1 - Insert node\n");
+        printf("2 - Search node\n");
+        printf("3 - Delete node\n");
+        printf("4 - Print preorder\n");
+        printf("5 - Print inorder\n");
+        printf("6 - Print postorder\n");
+        printf("7 - Print level order\n");
+        printf("8 - exit\n");
+
+        char choice[10] = { 0 };
+        printf("Enter your choice: ");
+        scanf("%s", choice);
+
+        if (strcmp(choice, "1") == 0) {
+            int value = 0;
+            printf("\033[0;32mEnter value: \033[0m");
+            scanf("%d", &value);
+            insert(root, value);
+        }
+        else if (strcmp(choice, "2") == 0) {
+            int value = 0;
+            Position result = NULL;
+            printf("\033[0;32mEnter value: \033[0m");
+            scanf("%d", &value);
+            result = search(root, value);
+            if (result != NULL)
+                printf("\033[0;32mNode %d is found.\033[0m\n", value);
+            else
+                printf("\033[0;32mNode %d is not found.\033[0m\n", value);
+        }
+        else if (strcmp(choice, "3") == 0) {
+            int value = 0;
+            printf("\033[0;32mEnter value: \033[0m");
+            scanf("%d", &value);
+            deleteNode(root, value);
+        }
+        else if (strcmp(choice, "4") == 0) {
+            printf("\033[0;32mPreorder: \033[0m");
+            preorder(root);
+            printf("\n");
+        }
+        else if (strcmp(choice, "5") == 0) {
+            printf("\033[0;32mInorder: \033[0m");
+            inorder(root);
+            printf("\n");
+        }
+        else if (strcmp(choice, "6") == 0) {
+            printf("\033[0;32mPostorder: \033[0m");
+            postorder(root);
+            printf("\n");
+        }
+        else if (strcmp(choice, "7") == 0) {
+            printf("\033[0;32mLevel-order: \033[0m");
+            levelOrder(root);
+            printf("\n");
+        }
+        else if (strcmp(choice, "8") == 0) {
+            printf("\033[0;32mExiting the program.\033[0m\n");
+            break;
+        }
+        else {
+            printf("\033[0;31mInvalid choice. Please enter a valid option.\033[0m\n");
+        }
+    }*/
+
+    return EXIT_SUCCESS;
+}
+int random() {
+    return (rand() % (90 - 10 + 1)) + 10;
+}
+
+int replace(pos root) {
+    if (root == NULL) {
+        return 0;
+    }
+
+
+    int left_value = replace(root->left);
+    int right_value = replace(root->right);
+
+
+    int original_value = root->value;
+
+
+    root->value = left_value + right_value;
+
+
+    return original_value + root->value;
+}
+pos insert(pos root, int value) {
+    if (root == NULL)
+        return add_node(value);
+
+    if (value < root->value)
+        root->left = insert(root->left, value);
+    else if (value >= root->value)
+        root->right = insert(root->right, value);
+
+    return root;
+}
+
+pos add_node(int value) {
+    pos new_node = (pos)malloc(sizeof(Node));
+    if (!new_node) {
+        printf("!new_node\n");
+        return NULL;
+    }
+    new_node->value = value;
+    new_node->left = NULL;
+    new_node->right = NULL;
+    return new_node;
+}
+
+pos insert(pos root, int value) {
+    if (root == NULL)
+        return add_node(value);
+
+    if (value < root->value)
+        root->left = insert(root->left, value);
+    else if (value >= root->value)
+        root->right = insert(root->right, value);
+
+    return root;
+}
+
+int in_o(pos root) {
+    if (root) {
+        in_o(root->left);
+        printf("%d ", root->value);
+        in_o(root->right);
+    }
+    return EXIT_SUCCESS;
+}
+
+int pre_o(pos root) {
+    if (root) {
+        printf("%d ", root->value);
+        pre_o(root->left);
+        pre_o(root->right);
+    }
+    return EXIT_SUCCESS;
+}
+
+int post_o(pos root) {
+    if (root) {
+        post_o(root->left);
+        post_o(root->right);
+        printf("%d ", root->value);
+    }
+    return EXIT_SUCCESS;
+}
+
+int level_o(pos root) {
+    if (root == NULL)
+        return;
+
+    pos queue[100] = { 0 };
+    int front = 0, rear = 0;
+
+    queue[rear++] = root;
+
+    while (front < rear) {
+        pos current = queue[front++];
+
+        printf("%d ", current->value);
+
+        if (current->left != NULL)
+            queue[rear++] = current->left;
+
+        if (current->right != NULL)
+            queue[rear++] = current->right;
+    }
+    return EXIT_SUCCESS;
+}
+
+pos search(pos root, int value) {
+    if (root == NULL || root->value == value)
+        return root;
+
+    if (value < root->value)
+        return search(root->left, value);
+
+    return search(root->right, value);
+}
+
+pos delete_node(pos root, int value) {
+    if (root == NULL)
+        return root;
+
+
+    if (value < root->value)
+        root->left = delete_node(root->left, value);
+    else if (value > root->value)
+        root->right = delete_node(root->right, value);
+    else {
+
+        if (root->left == NULL) {
+            pos temp = root->right;
+            free(root);
+            return temp;
+        }
+        else if (root->right == NULL) {
+            pos temp = root->left;
+            free(root);
+            return temp;
+        }
+
+        pos temp = root->right;
+        while (temp->left != NULL)
+            temp = temp->left;
+
+
+        root->value = temp->value;
+
+ 
+        root->right = delete_node(root->right, temp->value);
+    }
+
+    return root;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -278,7 +623,7 @@ int menu(Tree* root)
 	case 7:
 		levelorder(S);
 		break;
-		*/
+		*
 	case 8:
 		return 0;
 		break;
@@ -289,4 +634,4 @@ int menu(Tree* root)
 	}
 
 	return c;
-}
+}*/

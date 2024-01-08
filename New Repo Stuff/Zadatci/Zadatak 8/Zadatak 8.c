@@ -30,10 +30,10 @@ int main() {
     pos root_r = NULL;
     srand(time(0));
 
-    /*int rootValue = 0;
-    printf("\033[0;32mEnter root value: \033[0m");
-    scanf("%d", &rootValue);
-    root = insert(root, rootValue);*/
+    /*int root_value = 0;
+    printf("Enter root value: ");
+    scanf("%d", &root_value);
+    root = insert(root, root_value);*/
 
     root = insert(root, 2);
     insert(root, 5);
@@ -50,16 +50,16 @@ int main() {
 
     replace(root);
 
-    printf("\n");
-    level_o(root);
+    puts("\n");
+    in_o(root);
 
     root_r = insert(root_r, random());
     for (int i = 0; i < 10; i++) {
         insert(root_r, random());
     }
 
-    printf("\n");
-    level_o(root_r);
+    puts("\n");
+    in_o(root_r);
 
     //rand()
 
@@ -80,53 +80,53 @@ int main() {
 
         if (strcmp(choice, "1") == 0) {
             int value = 0;
-            printf("\033[0;32mEnter value: \033[0m");
+            printf("Enter value:");
             scanf("%d", &value);
             insert(root, value);
         }
         else if (strcmp(choice, "2") == 0) {
             int value = 0;
             Position result = NULL;
-            printf("\033[0;32mEnter value: \033[0m");
+            printf("Enter value: ");
             scanf("%d", &value);
             result = search(root, value);
             if (result != NULL)
-                printf("\033[0;32mNode %d is found.\033[0m\n", value);
+                printf("Node %d is found.\n", value);
             else
-                printf("\033[0;32mNode %d is not found.\033[0m\n", value);
+                printf("Node %d is not found.\n", value);
         }
         else if (strcmp(choice, "3") == 0) {
             int value = 0;
-            printf("\033[0;32mEnter value: \033[0m");
+            printf("Enter value: ");
             scanf("%d", &value);
             deleteNode(root, value);
         }
         else if (strcmp(choice, "4") == 0) {
-            printf("\033[0;32mPreorder: \033[0m");
+            printf("Preorder: ");
             preorder(root);
             printf("\n");
         }
         else if (strcmp(choice, "5") == 0) {
-            printf("\033[0;32mInorder: \033[0m");
+            printf("Inorder: ");
             inorder(root);
             printf("\n");
         }
         else if (strcmp(choice, "6") == 0) {
-            printf("\033[0;32mPostorder: \033[0m");
+            printf("Postorder: ");
             postorder(root);
             printf("\n");
         }
         else if (strcmp(choice, "7") == 0) {
-            printf("\033[0;32mLevel-order: \033[0m");
+            printf("Level-order:");
             levelOrder(root);
             printf("\n");
         }
         else if (strcmp(choice, "8") == 0) {
-            printf("\033[0;32mExiting the program.\033[0m\n");
+            printf("Exiting the program.\n");
             break;
         }
         else {
-            printf("\033[0;31mInvalid choice. Please enter a valid option.\033[0m\n");
+            printf("Invalid choice. Please enter a valid option.\n");
         }
     }*/
 

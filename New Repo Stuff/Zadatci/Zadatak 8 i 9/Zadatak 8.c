@@ -122,11 +122,11 @@ int main() {
             printf("\n");
         }
         else if (strcmp(choice, "8") == 0) {
-            printf("Exiting the program.\n");
+            printf("Exiting .\n");
             break;
         }
         else {
-            printf("Invalid choice. Please enter a valid option.\n");
+            printf("Invalid choice.\n");
         }
     }*/
 

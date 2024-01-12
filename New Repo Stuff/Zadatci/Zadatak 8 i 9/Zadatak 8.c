@@ -1,18 +1,18 @@
 
 #define _CRT_SECURE_NO_WARNINGS
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <time.h>
 
 
-struct _node;
-typedef struct _node* pos;
-typedef struct _node {
+struct node_;
+typedef struct node_* pos;
+typedef struct node_ {
     int value;
     pos left;
     pos right;
-} Node;
+} node;
 
 pos add_node(int value);
 pos insert(pos root, int value);
@@ -25,15 +25,17 @@ pos delete_node(pos root, int value);
 int replace(pos root);
 int random();
 
+/*int root_value = 0;
+printf("Enter root value: ");
+scanf(" %d", &root_value);
+root = insert(root, root_value);*/
+
 int main() {
     pos root = NULL;
     pos root_r = NULL;
     srand(time(0));
 
-    /*int root_value = 0;
-    printf("Enter root value: ");
-    scanf("%d", &root_value);
-    root = insert(root, root_value);*/
+
 
     root = insert(root, 2);
     insert(root, 5);
@@ -47,9 +49,7 @@ int main() {
     insert(root, 7);
 
     level_o(root);
-
     replace(root);
-
     puts("\n");
     in_o(root);
 
@@ -61,101 +61,92 @@ int main() {
     puts("\n");
     in_o(root_r);
 
-    //rand()
-
-    /*while (1) {
-        printf("\nMenu:\n");
-        printf("1 - Insert node\n");
-        printf("2 - Search node\n");
-        printf("3 - Delete node\n");
-        printf("4 - Print preorder\n");
-        printf("5 - Print inorder\n");
-        printf("6 - Print postorder\n");
-        printf("7 - Print level order\n");
-        printf("8 - exit\n");
-
-        char choice[10] = { 0 };
-        printf("Enter your choice: ");
-        scanf("%s", choice);
-
-        if (strcmp(choice, "1") == 0) {
-            int value = 0;
-            printf("Enter value:");
-            scanf("%d", &value);
-            insert(root, value);
-        }
-        else if (strcmp(choice, "2") == 0) {
-            int value = 0;
-            Position result = NULL;
-            printf("Enter value: ");
-            scanf("%d", &value);
-            result = search(root, value);
-            if (result != NULL)
-                printf("Node %d is found.\n", value);
-            else
-                printf("Node %d is not found.\n", value);
-        }
-        else if (strcmp(choice, "3") == 0) {
-            int value = 0;
-            printf("Enter value: ");
-            scanf("%d", &value);
-            deleteNode(root, value);
-        }
-        else if (strcmp(choice, "4") == 0) {
-            printf("Preorder: ");
-            preorder(root);
-            printf("\n");
-        }
-        else if (strcmp(choice, "5") == 0) {
-            printf("Inorder: ");
-            inorder(root);
-            printf("\n");
-        }
-        else if (strcmp(choice, "6") == 0) {
-            printf("Postorder: ");
-            postorder(root);
-            printf("\n");
-        }
-        else if (strcmp(choice, "7") == 0) {
-            printf("Level-order:");
-            levelOrder(root);
-            printf("\n");
-        }
-        else if (strcmp(choice, "8") == 0) {
-            printf("Exiting .\n");
-            break;
-        }
-        else {
-            printf("Invalid choice.\n");
-        }
-    }*/
-
     return EXIT_SUCCESS;
 }
+
+/*while (1) {
+    printf("\nMenu:\n");
+    printf("1 - Insert node\n");
+    printf("2 - Search node\n");
+    printf("3 - Delete node\n");
+    printf("4 - Print preorder\n");
+    printf("5 - Print inorder\n");
+    printf("6 - Print postorder\n");
+    printf("7 - Print level order\n");
+    printf("8 - exit\n");
+
+    char choice[10] = { 0 };
+    printf("Enter your choice: ");
+    scanf(" %s", choice);
+
+    if (strcmp(choice, "1") == 0) {
+        int value = 0;
+        puts("Enter value: ");
+        scanf(" %d", &value);
+        insert(root, value);
+    }
+    else if (strcmp(choice, "2") == 0) {
+        int value = 0;
+        pos result = NULL;
+        puts("Enter value: ");
+        scanf(" %d", &value);
+        result = search(root, value);
+        if (!result)
+            printf("Node %d found\n", value);
+        else
+            printf("Node %d not found\n", value);
+    }
+    else if (strcmp(choice, "3") == 0) {
+        int value = 0;
+        puts("Enter value: ");
+        scanf(" %d", &value);
+        delete_node(root, value);
+    }
+    else if (strcmp(choice, "4") == 0) {
+        puts("Preorder: ");
+        pre_o(root);
+    }
+    else if (strcmp(choice, "5") == 0) {
+        puts("Inorder: ");
+        in_o(root);
+    }
+    else if (strcmp(choice, "6") == 0) {
+        puts("Postorder: ");
+        post_o(root);
+    }
+    else if (strcmp(choice, "7") == 0) {
+        puts("Levelorder:");
+        level_o(root);
+    }
+    else if (strcmp(choice, "8") == 0) {
+        puts("Exiting\n");
+        break;
+    }
+    else {
+        puts("Invalid choice\n");
+    }
+}*/
+
+
 int random() {
-    return (rand() % (90 - 10 + 1)) + 10;
+    return (rand()%(80 + 1)) + 10;
 }
 
 int replace(pos root) {
-    if (root == NULL) {
+    if (!root) {
         return 0;
     }
-
 
     int left_value = replace(root->left);
     int right_value = replace(root->right);
 
-
     int original_value = root->value;
-
-
     root->value = left_value + right_value;
-
 
     return original_value + root->value;
 }
 pos insert(pos root, int value) {
-    if (root == NULL)
+    if (!root)
         return add_node(value);
 
     if (value < root->value)
@@ -167,7 +158,7 @@ pos insert(pos root, int value) {
 }
 
 pos add_node(int value) {
-    pos new_node = (pos)malloc(sizeof(Node));
+    pos new_node = (pos)malloc(sizeof(node));
     if (!new_node) {
         printf("!new_node\n");
         return NULL;
@@ -179,7 +170,7 @@ pos add_node(int value) {
 }
 
 pos insert(pos root, int value) {
-    if (root == NULL)
+    if (!root)
         return add_node(value);
 
     if (value < root->value)
@@ -218,7 +209,7 @@ int post_o(pos root) {
 }
 
 int level_o(pos root) {
-    if (root == NULL)
+    if (!root)
         return;
 
     pos queue[100] = { 0 };
@@ -228,12 +219,10 @@ int level_o(pos root) {
 
     while (front < rear) {
         pos current = queue[front++];
-
         printf("%d ", current->value);
 
         if (current->left != NULL)
             queue[rear++] = current->left;
-
         if (current->right != NULL)
             queue[rear++] = current->right;
     }
@@ -251,9 +240,8 @@ pos search(pos root, int value) {
 }
 
 pos delete_node(pos root, int value) {
-    if (root == NULL)
+    if (!root)
         return root;
-
 
     if (value < root->value)
         root->left = delete_node(root->left, value);
@@ -276,10 +264,7 @@ pos delete_node(pos root, int value) {
         while (temp->left != NULL)
             temp = temp->left;
 
-
         root->value = temp->value;
-
- 
         root->right = delete_node(root->right, temp->value);
     }
 
